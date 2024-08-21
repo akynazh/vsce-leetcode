@@ -3,6 +3,7 @@
 
 import { workspace, WorkspaceConfiguration } from "vscode";
 import { DescriptionConfiguration } from "../shared";
+import * as os from "os";
 
 export function getWorkspaceConfiguration(): WorkspaceConfiguration {
     return workspace.getConfiguration("leetcode");
@@ -13,7 +14,11 @@ export function shouldHideSolvedProblem(): boolean {
 }
 
 export function getWorkspaceFolder(): string {
-    return getWorkspaceConfiguration().get<string>("workspaceFolder", "");
+    var path = getWorkspaceConfiguration().get<string>("workspaceFolder", "");
+    if (path.startsWith('~')) {
+        return path.replace('~', os.homedir());
+    }
+    return path;
 }
 
 export function getEditorShortcuts(): string[] {

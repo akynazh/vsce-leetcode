@@ -219,7 +219,11 @@ class LeetCodeExecutor implements Disposable {
 
     private getNodePath(): string {
         const extensionConfig: WorkspaceConfiguration = workspace.getConfiguration("leetcode", null);
-        return extensionConfig.get<string>("nodePath", "node" /* default value */);
+        var path = extensionConfig.get<string>("nodePath", "node" /* default value */);
+        if (path.startsWith('~')) {
+            return path.replace('~', os.homedir());
+        }
+        return path;
     }
 
     private async executeCommandEx(command: string, args: string[], options: cp.SpawnOptions = { shell: true }): Promise<string> {
