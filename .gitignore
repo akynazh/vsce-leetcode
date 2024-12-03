@@ -59,7 +59,7 @@ typings/
 
 # Output
 out
-# *.vsix
+*.vsix
 .vscode-test
 
 # Mac
